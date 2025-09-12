@@ -9,6 +9,9 @@ export default async function Command(conn, m) {
     let isCommand = m.prefix && m.body.startsWith(m.prefix) || false
 
     const isOwner = m.fromMe || ownerNumber.includes(m.sender.split('@')[0])
+    const wait = (jid, keys) => {
+        conn.sendMessage(jid, { react: { text: "⌛", key: keys } });
+    }
 
     if (!mode && !isOwner) return;
 
@@ -20,6 +23,13 @@ export default async function Command(conn, m) {
         case 'ping': {
             const start = performance.now();
             m.reply(`Kecepatan respon: ${(performance.now() - start).toFixed(2)} ms`);
+        }
+        break;
+        case 'ai': {
+          wait(m.chat, m.key)
+          const res = await (await fetch(`https://api.nekolabs.my.id/ai/claude/sonnet-4?text=${m.text}`)).json()
+          if (!res.status) return m.reply("servernya burik")
+          m.reply(res.result)
         }
         break;
         case 'rvo': {
