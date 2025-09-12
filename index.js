@@ -68,6 +68,12 @@ async function startWA() {
         return conn.chats
     };
 
+    conn.parseMention = (text = "") => {
+      return [...text.matchAll(/@([0-9]{5,16}|0)/g)].map(
+        (v) => v[1] + "@s.whatsapp.net",
+      );
+    };
+
     conn.ev.on('connection.update', async ({ connection, lastDisconnect }) => {
         if (connection) console.log(color.yellow(`[+] Connection Status : ${connection}`))
         if (connection === 'close') {
