@@ -43,6 +43,63 @@ ESEMPE-MD adalah bot WhatsApp Multi-Device yang sederhana dan ringan.
 
 ---
 
+## Plugin
+
+1. Struktur Plugin
+   ```javascript
+   export default {
+     name: "name",                           // Nama plugin (wajib)
+     category: "category",                   // Kategori plugin (wajib)
+     command: ["command1", "command2", ...], // Commands plugin (wajib)
+     alias: ["cmd1", "cmd2", ...],           // Alias atau singkatan dari commands (opsional)
+     // Konfigurasi plugin (opsional)
+     settings: {
+       owner: true,      // Fitur khusus Owner
+       private: false,   // Fitur khusus Private Chat
+       group: true,      // Fitur khusus Group
+       admin: false,     // Fitur khusus Admin Group
+       botAdmin: true,   // Bot harus menjadi Admin
+       loading: false    // Kirim pesan loading sebelum menjalankan kode
+     },
+
+     // Dipanggil ketika pesan match dengan command/alias (wajib)
+     run: async (
+       conn,         // Instance WASocket
+       m,            // Object message
+       {
+         Api,        // Wrapper untuk fungsi terkait API. Lihat file lib/api.js
+         Func,       // Kumpulan fungsi utility. Lihat file lib/function.js
+         downloadM,  // Download media dari pesan
+         quoted,     // Object pesan yang direply
+         metadata,   // Metadata Group
+         isOwner,    // Apakah sender adalah Owner
+         isAdmin,    // Apakah sender adalah Admin Group
+         isBotAdmin  // Apakah bot adalah Admin Group
+       }
+     ) => {
+       // Kodemu di sini
+     },
+
+     // Dipanggil setiap ada pesan masuk (opsional)
+     // Parameternya persis dengan fungsi run
+     on: async (
+       conn,
+       m,
+       { Api, Func, downloadM, quoted, metadata, isOwner, isAdmin, isBotAdmin }
+     ) => {
+       // Kodemu di sini
+     }
+   };
+   ```
+
+2. Autocomplete (JSDoc)
+   Tambahkan baris JSDoc berikut tepat di atas `export default` file plugin:
+   ```javascript
+   /** @type {import('#lib/types.js').Plugin} */
+   ```
+
+---
+
 ## Struktur direktori (contoh)
 ```
 ESEMPE-MD/

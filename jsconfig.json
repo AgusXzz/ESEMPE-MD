@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES2022",
+    "checkJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "#lib/*": ["./lib/*"],
+      "#scrape/*": ["./lib/scrape/*"]
+    }
+  },
+  "exclude": ["node_modules"]
+}
