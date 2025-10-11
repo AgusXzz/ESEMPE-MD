@@ -93,6 +93,7 @@ ESEMPE-MD adalah bot WhatsApp Multi-Device yang sederhana dan ringan.
    ```
 
 2. Autocomplete (JSDoc)
+
    Tambahkan baris JSDoc berikut tepat di atas `export default` file plugin:
    ```javascript
    /** @type {import('#lib/types.js').Plugin} */
