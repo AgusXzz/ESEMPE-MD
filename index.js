@@ -120,19 +120,22 @@ async function startWA() {
             switch (action) {
                 case 'add':
                 case "revoked_membership_requests":
-                    metadata.participants.push(...participants.map(id => ({ id: jidNormalizedUser(id), admin: null })))
+                    participants.map(p => metadata.participants.push(p))
                     break
                 case 'demote':
                 case 'promote':
-                    for (const participant of metadata.participants) {
-                        let id = jidNormalizedUser(participant.id)
-                        if (participants.includes(id)) {
-                            participant.admin = (action === "promote" ? "admin" : null)
+                    for (const p of participants) {
+                        const target = metadata.participants.find(x => x.id === p.id);
+                        if (target) {
+                            target.admin = (action === 'promote') ? 'admin' : null;
                         }
                     }
                     break
                 case 'remove':
-                    metadata.participants = metadata.participants.filter(p => !participants.includes(jidNormalizedUser(p.id)))
+                    metadata = {
+                        ...metadata,
+                        participants: metadata.participants.filter(p => !participants.includes(p.id))
+                    }
                     break
             }
         }
